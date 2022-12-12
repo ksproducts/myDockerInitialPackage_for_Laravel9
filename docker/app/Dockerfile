@@ -23,8 +23,14 @@ zip \
 unzip \
 vim \
 libpng-dev \
-libpq-dev \
-&& docker-php-ext-install pdo_mysql
+libpq-dev
+
+# キャッシュをクリア
+RUN apt-get clean \
+&& rm -rf /var/lib/apt/lists/*
+
+# PHP拡張機能のインストール
+RUN docker-php-ext-install pdo_mysql
 
 # Laravelで必要になるmodRewriteを有効化する
 RUN mv /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled
